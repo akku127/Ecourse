@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect
-from .models import Category, Course, LikeCourse
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+from .models import Category, Course, LikeCourse, videos
 
 
 # Create your views here.
 
 def home(request):
     print('hello world')
-    return render(request, 'app1/index.html')
+    courses = Course.objects.order_by('-likes')
+    return render(request, 'app1/index.html', {'courses': courses})
 
 
 def categories(request):
@@ -25,13 +25,33 @@ def categoryview(request, slug):
 
 
 def courseview(request, slug):
+    like_status = "Like"
     course = Course.objects.get(slug=slug)
-    return render(request, 'app1/course.html', {'course': course})
+    print("likes", course.likes.all().count())
+    likes = course.likes.all().count()
+    if request.user in course.likes.all():
+        print('user present')
+        like_status = "Liked"
+    else:
+        print('user not present')
+    num = course.num_of_vids
+    print('num', num)
+    vids_list = []
+    for i in range(num):
+        vid = videos.objects.get(course=course, num=i)
+        print(vid.title)
+        vids_list.append(vid)
+    for v in vids_list:
+        print(v.num)
+        print(v.videofile)
+
+    return render(request, 'app1/course.html', {'course': course, 'likes': likes, 'like_status': like_status, 'vids': vids_list})
 
 
 def likecourse(request, slug):
     course = Course.objects.get(slug=slug)
     user = User.objects.get(id=request.user.id)
+    status = ""
     # obj = LikeCourse.objects.create(course=course, user=user, value=1)
     try:
         print('try block')
@@ -43,13 +63,20 @@ def likecourse(request, slug):
                 obj.value = 1
                 obj.save()
                 print('now liked')
+                course.likes.add(user)
+                status = "liked"
             else:
                 obj.value = 0
                 print(obj.value)
                 obj.save()
                 print('Unliked')
+                course.likes.remove(user)
+                status = "unliked"
     except Exception as e:
         print(e)
         obj = LikeCourse.objects.create(course=course, user=user, value=1)
         print('added to table')
-    return render(request, 'app1/course.html', {'course': course})
+        print('liked')
+    return redirect('courseview', slug=slug)
+
+

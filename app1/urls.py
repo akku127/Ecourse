@@ -1,5 +1,7 @@
 from django.urls import path, include
-from . import views
+from django.conf.urls import url
+
+from .import views
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -7,5 +9,4 @@ urlpatterns = [
     path('catview/<slug:slug>/', views.categoryview, name='categoryview'),
     path('course/<slug:slug>/', views.courseview, name='courseview'),
     path('like/<slug:slug>/', views.likecourse, name='likecourse'),
-
 ]

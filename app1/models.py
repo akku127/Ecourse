@@ -32,8 +32,9 @@ class Course(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     date_modified = models.DateField(auto_now=True, null=True, blank=True, editable=True)
     thumbnail = models.ImageField(upload_to='thumbnails', null=True, blank=True)
-    likes = models.ManyToManyField(User, related_name='course_like', blank=True, null=True)
+    likes = models.ManyToManyField(User, blank=True, null=True)
     num_of_vids = models.IntegerField(null=True, blank=True)
+
     def __str__(self):
         return self.name
 
@@ -42,37 +43,42 @@ class Course(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
-
     def get_absolute_url(self):
         return reverse('courseview', kwargs={'slug': self.slug})
 
     def get_likes(self):
         return self.likes
 
-# Likes table
-class LikeCourse(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    value = models.IntegerField(max_length=2, default=0)
 
-    def __str__(self):
-        heading = str(self.course) + " " + str(self.user) + " " + str(self.value)
-        return heading
-
-class videos(models.Model):
+class video(models.Model):
     title = models.CharField(max_length=150)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     num = models.IntegerField()
     videofile = models.FileField(upload_to='videos', null=True, blank=True)
+    likes = models.ManyToManyField(User, blank=True, null=True)
 
     def __str__(self):
-        return self.title + str(self.num)
+        return self.title + " " + str(self.num)
+
 
 class Comment(models.Model):
-    text = models.CharField(max_length=150)
+    text = models.TextField(max_length=150)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    video = models.ForeignKey(videos, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    video = models.ForeignKey(video, on_delete=models.CASCADE, null=True, blank=True, related_name="relname")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.text + str(self.user)
+        return self.text + " " + str(self.user)
+
+
+# Likes table
+class LikeCourse(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.IntegerField(default=0)
+    video = models.ForeignKey(video, related_name='vidrelname', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        heading = str(self.course) + " " + str(self.user) + " " + str(self.value)
+        return heading

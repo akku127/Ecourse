@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from .forms import CommentForm
 
-from .models import Category, Course, LikeCourse, videos
+from .models import Category, Course, LikeCourse, video, Comment
 
 
 # Create your views here.
@@ -37,22 +40,26 @@ def courseview(request, slug):
     num = course.num_of_vids
     print('num', num)
     vids_list = []
-    for i in range(num):
-        vid = videos.objects.get(course=course, num=i)
-        print(vid.title)
-        vids_list.append(vid)
-    for v in vids_list:
-        print(v.num)
-        print(v.videofile)
 
-    return render(request, 'app1/course.html', {'course': course, 'likes': likes, 'like_status': like_status, 'vids': vids_list})
+    for i in range(num):
+        print('i', i)
+        print('num', num)
+        try:
+            vid = video.objects.get(course=course, num=i)
+            print(vid.title)
+            vids_list.append(vid)
+        except Exception as e:
+            print(e)
+    comment_form = CommentForm()
+    return render(request, 'app1/course.html',
+                  {'course': course, 'likes': likes, 'like_status': like_status, 'vids': vids_list,
+                   'comment_form': comment_form})
 
 
 def likecourse(request, slug):
     course = Course.objects.get(slug=slug)
     user = User.objects.get(id=request.user.id)
     status = ""
-    # obj = LikeCourse.objects.create(course=course, user=user, value=1)
     try:
         print('try block')
         obj = LikeCourse.objects.get(course=course, user=user)
@@ -77,6 +84,5 @@ def likecourse(request, slug):
         obj = LikeCourse.objects.create(course=course, user=user, value=1)
         print('added to table')
         print('liked')
+    data = {'status': status}
     return redirect('courseview', slug=slug)
-
-

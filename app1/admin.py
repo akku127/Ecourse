@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Category, LikeCourse, videos
+from .models import Course, Category, LikeCourse, video, Comment
 
 # Register your models here.
 
@@ -12,4 +12,5 @@ from .models import Course, Category, LikeCourse, videos
 admin.site.register(Course)
 admin.site.register(Category)
 admin.site.register(LikeCourse)
-admin.site.register(videos)
+admin.site.register(video)
+admin.site.register(Comment)

@@ -1,6 +1,6 @@
 {% load static %}
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>{{course.name}}</title>
 </head>
-<body>
+<body oncontextmenu="return false;">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'home'%}">EduApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -39,13 +41,14 @@
 </nav>
 
 <div class="course-content">
-    <h2>{{course.name}}</h2>
-    <p>{{course.lecturer}}</p>
-    <p>Date Created - {{course.date_created}}</p>
-    <p>Last Updated - {{course.date_modified}}</p>
-    <img src="{{course.thumbnail.url}}" alt="img" width="500" height="500">
-    <p>{{course.thumbnail.url}}</p>
+    <div class="course-heading">
+        <h2>{{course.name}}</h2>
+    </div>
+    <div class="course-background">
+        <img src="{{course.thumbnail.url}}" alt="course-image" width="100%">
+    </div>
 </div>
+
 <div class="likecourse">
     <form action="{% url 'likecourse' course.slug %}" method="POST">
         {% csrf_token %}
@@ -54,21 +57,28 @@
     <p>Likes - {{likes}}</p>
     {{status}}
 </div>
+
 <div class="videos">
     {% for vid in vids %}
-    <h4>{{vid.title}}</h4>
-    <video width='320' height='240' controls>
-        <source src="{{ vid.videofile.url }}">
-        Your browser does not support the video tag.
-    </video>
-    <div class="comments">
-
+    <div class="video">
+        <div class="video-heading">
+            <h4>{{vid.title}}</h4>
+        </div>
+        <video width='720' height='440' controls controlsList="nodownload">
+            <source src="{{ vid.videofile.url }}">
+            Your browser does not support the video tag.
+        </video>
     </div>
+
+
     {% endfor %}
+
+
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>

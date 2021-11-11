@@ -1,5 +1,7 @@
 *{
     box-sizing: border-box;
+    
+    
 }
 
 body{
@@ -28,7 +30,7 @@ body{margin-top:20px;}
 }
 
 .course-background{
-    width: 100%%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -43,7 +45,7 @@ body{margin-top:20px;}
 .course-heading{
     display: flex;
     justify-content: center;
-    margin: 10px;21
+    margin: 10px;
 }
 .course-heading>h2{
     justify-content: center;
@@ -53,15 +55,88 @@ body{margin-top:20px;}
     display: flex;
     justify-content: center;
     color: #0080FF;
+    margin-bottom: 20px;
+
+    
+
 }
 .videos{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 40px;
 }
 .video{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-self: center;
+}
+.categories-list{
+   width: 800px;
+  
+   
+    
+    
+}
+.categories-container{
+    display: flex;
+   justify-content: center;
+   margin-top: 100px;
+}
+
+.categories-ul{
+    
+   
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 60px;
+    list-style-type: none;
+    
+   
+}
+
+
+
+.courses{
+   
+    display: flex;
+    margin:60px; 
+    overflow: scroll; 
+}
+.courses::-webkit-scrollbar{
+    display: none;
+}
+.course-detail{
+    margin-right: 30px;
+}
+.courses-container{
+    margin-bottom: 30px;
+}
+.likecourse{
+    display: flex;
+    justify-content: flex-end;
+    margin: 40px 150px 40px 0px;
+}
+
+ .course-descreption{
+     width: 80%;
+     margin: auto;
+     margin-top: 30px;
+ }  
+
+
+ .course-video-container{
+     margin-top: 30px;
+ }
+.course-grid{
+    display: grid;
+    grid-template-columns: repeat(3,400px);
+    list-style-type: none;
+    row-gap: 60px;
+}
+.courses-list{
+   display: flex;
+   justify-content: center;
+    margin-top: 50px;
 }

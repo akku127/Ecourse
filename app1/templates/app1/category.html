@@ -24,9 +24,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+           
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search Courses">
@@ -35,18 +33,23 @@
     </div>
 </nav>
 <hr>
+<h1 style="text-align: center;margin-top: 50px;margin-bottom: 50px;">Categories</h1>
+<div class="categories-container">
+    
 <div class="categories-list">
-    <ul>
+    <ul class="categories-ul">
         {% for category in categories %}
-
+        <div>
         <a href="" class="cat">
             <div class="category-bgimage">
                 <img src="{{category.thumbnail.url}}" alt="Thumbnail" width="200" height="200">
             </div>
-            <li><a href="{{category.get_absolute_url}}">{{category}}</a></li>
+            <li style="text-align: center;font-size: 20px;" ><a style="color: black;" href="{{category.get_absolute_url}}">{{category}}</a></li>
         </a>
+    </div>
         {% endfor %}
     </ul>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

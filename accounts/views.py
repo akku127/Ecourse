@@ -20,7 +20,7 @@ def registration(request):
         if form.is_valid():
             print('Valid')
             form.save()
-            messages.success("User Created, Please complete the profile now")
+            # messages.success("User Created, Please complete the profile now")
             email = form.cleaned_data['email']
             print(email)
             user = User.objects.get(email=email)
@@ -38,12 +38,12 @@ def profile(request, pk):
     print(user)
     if request.method == 'POST':
 
-        form = UserProfileForm(request.POST, instance=user)
+        form = UserProfileForm(request.POST)
         print(user)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = user
-            profile.save()
+            instance.save()
             print('form saved')
         else:
             print('jumped to else')

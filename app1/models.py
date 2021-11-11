@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=50, null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='category_bgimage', null=True, blank=True)
 
     def __str__(self):
         return self.name

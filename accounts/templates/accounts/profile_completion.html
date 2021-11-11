@@ -1,0 +1,19 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Completion</title>
+</head>
+<body>
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    <div class="profile-form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>

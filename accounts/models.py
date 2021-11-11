@@ -5,15 +5,14 @@ from app1.models import *
 
 class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    dob = models.DateField()
-    created_on = models.DateField(auto_now_add=True)
+    dob = models.DateField(null=True, blank=True)
     address = models.TextField(max_length=200)
     city = models.CharField(max_length=150)
     country = models.CharField(max_length=100)
     phone = models.CharField(max_length=10)
-    is_student = models.BooleanField(default=True)
-    is_lecturer = models.BooleanField(default=False)
-    picture = models.ImageField(upload_to="profile_pics")
+    is_student = models.BooleanField(default=True, null=True, blank=True)
+    is_lecturer = models.BooleanField(default=False, null=True, blank=True)
+    picture = models.ImageField(upload_to="profile_pics", null=True, blank=True)
 
     def get_post(self):
         if self.is_lecturer == True:

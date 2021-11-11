@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 
     <title>Document</title>
 </head>
@@ -35,12 +36,17 @@
 </nav>
 <hr>
 <div class="categories-list">
-    {% for category in categories %}
     <ul>
-        <li><a href="{{category.get_absolute_url}}">{{category}}</a></li>
-    </ul>
+        {% for category in categories %}
 
-    {% endfor %}
+        <a href="" class="cat">
+            <div class="category-bgimage">
+                <img src="{{category.thumbnail.url}}" alt="Thumbnail" width="200" height="200">
+            </div>
+            <li><a href="{{category.get_absolute_url}}">{{category}}</a></li>
+        </a>
+        {% endfor %}
+    </ul>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

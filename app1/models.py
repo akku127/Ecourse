@@ -27,6 +27,7 @@ class Category(models.Model):
 # Course Table
 class Course(models.Model):
     name = models.CharField(max_length=150)
+    about = models.CharField(max_length=900, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=150, blank=True, null=True)
     lecturer = models.CharField(max_length=150, null=True, blank=True)
@@ -66,7 +67,7 @@ class Comment(models.Model):
     text = models.TextField(max_length=150)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
-    video = models.ForeignKey(video, on_delete=models.CASCADE, null=True, blank=True, related_name="relname")
+    video = models.ForeignKey(video, on_delete=models.CASCADE, null=True, blank=True, related_name="commentrelname")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
@@ -83,3 +84,13 @@ class LikeCourse(models.Model):
     def __str__(self):
         heading = str(self.course) + " " + str(self.user) + " " + str(self.value)
         return heading
+
+class Subscription(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_subscribed = models.DateTimeField(auto_now_add=True)
+    date_unsubscribed = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user) + str(self.course)
+

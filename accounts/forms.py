@@ -14,7 +14,7 @@ class NewUserForm(UserCreationForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('user', 'dob', 'address', 'city', 'country', 'phone', 'picture', 'is_student', 'is_lecturer')
+        fields = ('dob', 'address', 'city', 'country', 'phone', 'picture', 'is_student', 'is_lecturer')
         widgets = {
             'dob': forms.DateInput(format=('%m/%d/%Y'),
                                    attrs={'class': 'form-control', 'placeholder': 'Select a date', 'type': 'date'}),

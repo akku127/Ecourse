@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-</head>
-<body>
+{% extends 'base_layout.html' %}
+
+{% block title %}
+<title>{{title}}</title>
+{% endblock %}
+
+{% block content %}
 <form action="" method="POST">
-  {% csrf_token %}
-  {{form.as_p}}
-  <input type="submit">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit">
 </form>
-</body>
-</html>
+{% endblock %}

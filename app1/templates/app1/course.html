@@ -1,44 +1,15 @@
-{% load static %}
-
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>{{course.name}}</title>
-</head>
-<body oncontextmenu="return false;">
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'home'%}">EduApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'categories' %}">Categories <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search Courses">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
-
+{% extends 'base_layout.html' %}
+{% block title %}
+    <title>{{title}}</title>
+{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-primary" role="alert">
+    {{message}}
+</div>
+<br>
+<hr>
+{% endfor %}
 <div class="course-content">
     <div class="course-heading">
         <h2>{{course.name}}</h2>
@@ -49,13 +20,15 @@
 </div>
 <div class="course-descreption">
     <h3>About Course</h3>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+    <p>{{course.about}}</p>
 </div>
 
 <div class="likecourse">
     <form action="{% url 'likecourse' course.slug %}" method="POST">
         {% csrf_token %}
-        <button style="margin-right: 30px;width: 80px; background-color: rgb(7, 23, 247); color: white;" type="submit">{{like_status}}</button>
+        <button style="margin-right: 30px;width: 80px; background-color: rgb(7, 23, 247); color: white;" type="submit">
+            {{like_status}}
+        </button>
     </form>
     <p>Likes - {{likes}}</p>
     {{status}}
@@ -63,33 +36,27 @@
 
 <div class="course-video-container">
     <h2 style="margin: 20px 0 30px 150px ;">Course Content</h2>
-<div class="videos">
-    {% for vid in vids %}
-    <div class="video">
-        <div class="video-heading">
-            <h3>{{vid.title}}</h3>
+    <div class="videos">
+        {% for vid in vids %}
+        <div class="video">
+            <div class="video-heading">
+                <h3>{{vid.title}}</h3>
+            </div>
+            <video width='720' height='440' controls controlsList="nodownload">
+                <source src="{{ vid.videofile.url }}">
+                Your browser does not support the video tag.
+            </video>
         </div>
-        <video width='720' height='440' controls controlsList="nodownload">
-            <source src="{{ vid.videofile.url }}">
-            Your browser does not support the video tag.
-        </video>
+
+
+        {% endfor %}
+
+
     </div>
-
-
-    {% endfor %}
-
-
-</div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+
+

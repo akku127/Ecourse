@@ -138,3 +138,45 @@ body{margin-top:20px;}
    justify-content: center;
     margin-top: 50px;
 }
+
+.profile-pic {
+  padding: 100px;
+}
+
+.image--cover {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center right;
+}
+@media only screen and (max-width:600px){
+    .categories-ul{
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+    }
+    .course-grid{
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+    }
+}
+@media only screen and (max-width:1181px){
+
+    .course-grid{
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+    }
+}
+@media only screen and (max-width:720px){
+    .displayVideo{
+        width: 100%;
+    }
+}

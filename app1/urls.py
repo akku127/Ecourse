@@ -9,4 +9,6 @@ urlpatterns = [
     path('catview/<slug:slug>/', views.categoryview, name='categoryview'),
     path('course/<slug:slug>/', views.courseview, name='courseview'),
     path('like/<slug:slug>/', views.likecourse, name='likecourse'),
+    path('subscribe/<slug:slug>/', views.subscribe, name='subscribe'),
+    # path('addvid/', views.addvideo, name='addvideo')
 ]

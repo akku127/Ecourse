@@ -13,6 +13,7 @@ class Profile(models.Model):
     is_student = models.BooleanField(default=True, null=True, blank=True)
     is_lecturer = models.BooleanField(default=False, null=True, blank=True)
     picture = models.ImageField(upload_to="profile_pics", null=True, blank=True)
+    is_approved = models.BooleanField(default=False, null=True, blank=True)
 
     def get_post(self):
         if self.is_lecturer == True:

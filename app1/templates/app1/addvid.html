@@ -1,0 +1,20 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}
+    <title>{{title}}</title>
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="course-select">Course</label>
+    <select name="course-select" id="course-select">
+        {% for course in user_courses %}
+        <option value="{{course.name}}">{{course.name}}</option>
+        {% endfor %}
+    </select>
+    <hr>
+    {{form.as_p}}
+    <input type="submit" value="Add">
+</form>
+{% endblock %}

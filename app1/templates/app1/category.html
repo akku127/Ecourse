@@ -11,7 +11,7 @@
         <ul class="categories-ul">
             {% for category in categories %}
             <div>
-                <a href="{{category.thumbnail.url}}" class="cat">
+                <a href="{{category.get_absolute_url}}" class="cat">
                     <div class="category-bgimage">
                         <img src="{{category.thumbnail.url}}" alt="Thumbnail" width="200" height="200">
                     </div>

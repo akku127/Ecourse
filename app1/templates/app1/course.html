@@ -1,6 +1,6 @@
 {% extends 'base_layout.html' %}
 {% block title %}
-    <title>{{title}}</title>
+<title>{{title}}</title>
 {% endblock %}
 {% block content %}
 {% for message in messages %}
@@ -22,7 +22,12 @@
     <h3>About Course</h3>
     <p>{{course.about}}</p>
 </div>
-
+{% if subscribed %}
+<h2>Subscribed</h2>
+<form action="{% url 'subscribe' course.slug %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Unsubscribe">
+</form>
 <div class="likecourse">
     <form action="{% url 'likecourse' course.slug %}" method="POST">
         {% csrf_token %}
@@ -42,7 +47,7 @@
             <div class="video-heading">
                 <h3>{{vid.title}}</h3>
             </div>
-            <video width='720' height='440' controls controlsList="nodownload">
+            <video class="displayVideo" controls controlsList="nodownload">
                 <source src="{{ vid.videofile.url }}">
                 Your browser does not support the video tag.
             </video>
@@ -54,6 +59,16 @@
 
     </div>
 </div>
+
+{% else %}
+<h2>Subscribe</h2>
+<form action="{% url 'subscribe' course.slug %}" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Subscribe">
+</form>
+
+{% endif %}
 
 {% endblock %}
 

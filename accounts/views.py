@@ -7,11 +7,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 
+
 # Create your views here.
 
 @login_required()
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    print(request.user)
+    user_profile = Profile.objects.get(user=request.user)
+    subs = Subscription.objects.filter(user=request.user)
+    return render(request, 'accounts/dashboard.html', {'profile': user_profile, 'subs': subs})
 
 
 def registration(request):

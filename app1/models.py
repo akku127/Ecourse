@@ -34,7 +34,7 @@ class Course(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=True)
     date_modified = models.DateField(auto_now=True, null=True, blank=True, editable=True)
     thumbnail = models.ImageField(upload_to='thumbnails', null=True, blank=True)
-    likes = models.ManyToManyField(User, blank=True, null=True)
+    likes = models.ManyToManyField(User, blank=True)
     num_of_vids = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -57,7 +57,7 @@ class video(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     num = models.IntegerField()
     videofile = models.FileField(upload_to='videos', null=True, blank=True)
-    likes = models.ManyToManyField(User, blank=True, null=True)
+    likes = models.ManyToManyField(User)
 
     def __str__(self):
         return self.title + " " + str(self.num)
@@ -85,12 +85,13 @@ class LikeCourse(models.Model):
         heading = str(self.course) + " " + str(self.user) + " " + str(self.value)
         return heading
 
+
 class Subscription(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_subscribed = models.DateTimeField(auto_now_add=True)
     date_unsubscribed = models.DateTimeField(null=True, blank=True)
+    completed = models.BooleanField(default=False, null=True, blank=True)
 
     def __str__(self):
-        return str(self.user) + str(self.course)
-
+        return str(self.user) + "-" + str(self.course)

@@ -65,11 +65,13 @@ def courseview(request, slug):
         except Exception as e:
             print(e)
     comment_form = CommentForm()
-    sub = Subscription.objects.get(course=course, user=request.user)
-    if sub.completed:
-        complete_btn = "Mark Incomplete"
-    else:
-        complete_btn = "Mark Completed"
+    complete_btn = ''
+    if subscribed:
+        sub = Subscription.objects.get(course=course, user=request.user)
+        if sub.completed:
+            complete_btn = "Mark Incomplete"
+        else:
+            complete_btn = "Mark Completed"
     return render(request, 'app1/course.html',
                   {'subscribed': subscribed, 'course': course, 'likes': likes, 'like_status': like_status,
                    'vids': vids_list,

@@ -22,28 +22,29 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'categories' %}">Categories <span class="sr-only">(current)</span></a>
+            <li class="nav-item ">
+                <a class="nav-link cat" href="{% url 'categories' %}" style="color: white;">Categories <span class="sr-only">(current)</span></a>
             </li>
             {% if user.is_authenticated %}
             <li class="nav-item">
                     <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
                         {{form.as_p}}
-                        <input type="submit" value="Logout">
+                        <input type="submit"  value="Logout">
                     </form>
             </li>
+            <li class="nav-item">
+                <a class="nav-link cat" href="{% url 'dashboard' %}" style="color: white;">Dashboard</a>
+              </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-link cat" href="{% url 'login' %}" style="color: white;">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'register' %}">Register</a>
+              <a class="nav-link cat" href="{% url 'register' %}" style="color: white;">Register</a>
             </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
+
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -65,4 +66,18 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 </body>
+
+<style>
+ .cat, input[type=submit]{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  height: 50px;
+  width: 120px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
 </html>

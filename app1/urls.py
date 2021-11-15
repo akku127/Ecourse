@@ -10,5 +10,6 @@ urlpatterns = [
     path('course/<slug:slug>/', views.courseview, name='courseview'),
     path('like/<slug:slug>/', views.likecourse, name='likecourse'),
     path('subscribe/<slug:slug>/', views.subscribe, name='subscribe'),
+    path('completed/<slug:slug>/', views.completed_course, name='complete_btn')
     # path('addvid/', views.addvideo, name='addvideo')
 ]

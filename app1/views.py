@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from .forms import CommentForm, AddVidForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Category, Course, LikeCourse, video, Comment, Subscription
 from accounts.models import Profile
 
@@ -64,10 +65,15 @@ def courseview(request, slug):
         except Exception as e:
             print(e)
     comment_form = CommentForm()
+    sub = Subscription.objects.get(course=course, user=request.user)
+    if sub.completed:
+        complete_btn = "Mark Incomplete"
+    else:
+        complete_btn = "Mark Completed"
     return render(request, 'app1/course.html',
                   {'subscribed': subscribed, 'course': course, 'likes': likes, 'like_status': like_status,
                    'vids': vids_list,
-                   'comment_form': comment_form, 'title': course.name})
+                   'comment_form': comment_form, 'title': course.name, 'complete_btn': complete_btn})
 
 
 @login_required(login_url='login')
@@ -163,3 +169,21 @@ def check_subscription(course, user):
     except Exception as e:
         print("doesnt have subscription")
         return False
+
+
+@login_required(login_url='login')
+def completed_course(request, slug):
+    course = Course.objects.get(slug=slug)
+    sub = Subscription.objects.get(course=course, user=request.user)
+    print(sub.completed)
+    if sub.completed == True:
+        print('already completed, marking as incomplete')
+        sub.completed = False
+        sub.save()
+        messages.success(request, 'Marked as incomplete')
+    else:
+        print('completing now')
+        sub.completed = True
+        sub.save()
+        messages.success(request, 'marked as complete')
+    return redirect('courseview', slug=slug)

@@ -56,7 +56,13 @@
 
         {% endfor %}
 
+    <div class="completed">
+        <form action="{% url 'complete_btn' course.slug %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="{{complete_btn}}">
+        </form>
 
+    </div>
     </div>
 </div>
 
